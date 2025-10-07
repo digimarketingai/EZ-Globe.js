@@ -1,8 +1,6 @@
 # EZ-Globe: A Simple Interactive 3D Globe
 # EZ-Globe：一個簡單的互動式3D地球儀
 
-[![License: MIT]]
-
 A lightweight, self-contained JavaScript library for creating beautiful, interactive 3D globes. The only file you need to edit is `index.html` to change the data points. The library handles everything else.
 
 一個輕量級、獨立自足的 JavaScript 函式庫，用於創建精美、可互動的3D地球儀。您唯一需要編輯的檔案是 `index.html`，用以修改資料點。函式庫會處理其他所有事情。
