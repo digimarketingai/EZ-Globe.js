@@ -36,7 +36,7 @@ Create an `index.html` file and paste the following structure.
 </head>
 <body>
   <div id="globe-container"></div>
-  <script src="https://cdn.jsdelivr.net/gh/digimarketingai/EZ-Globe.js/EZ-Globe.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/digimarketingai/EZ-Globe.js/globe-bundle.js" defer>
   </script>
   <script>
     const DEMO_SPOTS = [
