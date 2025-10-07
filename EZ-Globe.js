@@ -1,24 +1,41 @@
 /**
- * EZ-Globe.js v1.0
- * A simple, self-contained library for creating interactive 3D globes.
+ * EZ-Globe.js v2.0
+ * A simple, self-contained, self-initializing library for creating interactive 3D globes.
  */
 (function(window) {
     'use strict';
-    function init(userConfig) {
-        if (!userConfig || !userConfig.customConfig || !userConfig.mySpotsData) {
-            console.error("EZ-Globe Error: init() function requires an object with 'customConfig' and 'mySpotsData' properties.");
-            document.body.innerHTML = `<div style="font-family:monospace;color:red;padding:2em;">EZ-Globe Error: Configuration data not passed to init(). Please check the browser console.</div>`;
+
+    // --- 1. CORE INITIALIZATION (SELF-EXECUTING) ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const configElement = document.getElementById('ez-globe-config');
+        const dataElement = document.getElementById('ez-globe-data');
+
+        if (!configElement || !dataElement) {
+            console.error("EZ-Globe Error: Missing required script tags. Ensure the page contains <script id='ez-globe-config'> and <script id='ez-globe-data'>.");
+            document.body.innerHTML = `<div style="font-family:monospace;color:red;padding:2em;">EZ-Globe Error: Configuration or data script tags are missing. Please check the browser console.</div>`;
             return;
         }
-        injectMetaTags();
-        loadDependencies().then(() => {
-            console.log("EZ-Globe: All dependencies loaded. Initializing scene.");
-            const fullConfig = { ...userConfig.customConfig, spotsData: userConfig.mySpotsData };
-            initializeScene(fullConfig);
-        }).catch(error => {
-            console.error("EZ-Globe Error: Failed to load one or more required scripts.", error);
-        });
-    }
+
+        try {
+            const customConfig = JSON.parse(configElement.textContent);
+            const mySpotsData = JSON.parse(dataElement.textContent);
+            
+            injectMetaTags();
+            loadDependencies().then(() => {
+                console.log("EZ-Globe: All dependencies loaded. Initializing scene.");
+                const fullConfig = { ...customConfig, spotsData: mySpotsData };
+                initializeScene(fullConfig);
+            }).catch(error => {
+                console.error("EZ-Globe Error: Failed to load one or more required scripts.", error);
+            });
+
+        } catch (e) {
+            console.error("EZ-Globe Error: Failed to parse JSON data from script tags. Please ensure the JSON is valid.", e);
+            document.body.innerHTML = `<div style="font-family:monospace;color:red;padding:2em;">EZ-Globe Error: Invalid JSON in data scripts. Please check the browser console.</div>`;
+        }
+    });
+
+    // --- 2. HELPER FUNCTIONS ---
     function injectMetaTags() {
         const head = document.head;
         if (!head.querySelector('meta[charset]')) { const charset = document.createElement('meta'); charset.setAttribute('charset', 'UTF-8'); head.prepend(charset); }
@@ -29,6 +46,8 @@
         return Promise.all(SCRIPT_URLS.map(url => new Promise((resolve, reject) => { const script = document.createElement('script'); script.src = url; script.onload = resolve; script.onerror = reject; document.head.appendChild(script); })));
     }
     function latLonToVector3(lat, lon, radius) { const phi = (90 - lat) * (Math.PI / 180); const theta = (lon + 180) * (Math.PI / 180); return new THREE.Vector3(-(radius * Math.sin(phi) * Math.cos(theta)), radius * Math.cos(phi), radius * Math.sin(phi) * Math.sin(theta)); }
+
+    // --- 3. CORE GLOBE LOGIC (No changes here) ---
     function initializeScene(config) {
         const domElements = injectLibraryAssets(config);
         const { container, infoBox, closeButton, infoName, infoImage, infoDescEn, infoDescZh, resetButton } = domElements;
@@ -92,6 +111,8 @@
         }
         animate();
     }
+    
+    // --- 4. DOM & CSS INJECTION  ---
     function injectLibraryAssets(config) {
         const css = `html,body{width:100%;height:100%;margin:0;padding:0;overflow:hidden;background:#000}#gl-container{position:relative;width:100%;height:100%}#gl-infoBox{display:none;position:absolute;top:20px;left:20px;width:320px;max-height:calc(100vh - 40px);background:rgba(25,25,25,.85);color:#fff;border:1px solid #444;border-radius:12px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,.7);overflow-y:auto;z-index:100;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;transition:all .3s ease}#gl-infoBox img{width:100%;height:auto;border-radius:8px;margin-bottom:15px;border:1px solid #555}#gl-infoBox h3{margin-top:0;margin-bottom:15px;color:#ffb700;font-size:1.4em}#gl-infoBox h4{margin-top:20px;margin-bottom:5px;color:#888;border-bottom:1px solid #444;padding-bottom:5px;font-size:.9em;text-transform:uppercase;letter-spacing:.5px}#gl-infoBox p{margin-top:0;line-height:1.6;color:#ccc}#gl-closeButton,#gl-resetButton{position:absolute;width:30px;height:30px;background:rgba(0,0,0,.5);color:#fff;border:1px solid #777;border-radius:50%;text-align:center;cursor:pointer;font-weight:700;font-size:16px;-webkit-user-select:none;user-select:none;z-index:101;transition:all .2s ease}#gl-closeButton{top:15px;right:15px;line-height:28px}#gl-resetButton{top:20px;right:20px;line-height:30px;font-size:18px}#gl-closeButton:hover,#gl-resetButton:hover{background:#ffb700;color:#000;transform:scale(1.1)}#gl-title{position:absolute;top:20px;left:50%;transform:translateX(-50%);color:#fff;font-size:1.5em;font-weight:300;text-shadow:0 0 10px rgba(0,0,0,.8);z-index:50;pointer-events:none;text-align:center}#gl-developer{position:absolute;bottom:15px;right:15px;font-size:.8em;color:#aaa;z-index:50}@media (max-width:500px){#gl-infoBox{width:calc(100% - 40px);left:50%;top:auto;bottom:20px;transform:translateX(-50%);max-height:45vh}#gl-title{font-size:1.1em;width:90%}#gl-resetButton{top:auto;bottom:20px}#gl-developer{font-size:.7em;bottom:5px;right:5px}}`;
         const styleElement = document.createElement('style');
@@ -107,12 +128,5 @@
         container.insertAdjacentHTML('beforeend', `<div id="gl-infoBox"><div id="gl-closeButton">×</div><h3 id="gl-infoName"></h3><img id="gl-infoImage" src="" alt="Location Image"><h4>Description</h4><p id="gl-infoDescEn"></p><h4>介紹</h4><p id="gl-infoDescZh"></p></div><div id="gl-resetButton">⟲</div>${titleHtml}${devHtml}`);
         return { container, infoBox: document.getElementById('gl-infoBox'), closeButton: document.getElementById('gl-closeButton'), infoName: document.getElementById('gl-infoName'), infoImage: document.getElementById('gl-infoImage'), infoDescEn: document.getElementById('gl-infoDescEn'), infoDescZh: document.getElementById('gl-infoDescZh'), resetButton: document.getElementById('gl-resetButton') };
     }
-    window.EZGlobe = { init: init };
-})(window);
 
-    document.addEventListener('DOMContentLoaded', function() {
-            EZGlobe.init({
-                customConfig: customConfig,
-                mySpotsData: mySpotsData
-            });
-    });
+})(window);
