@@ -70,6 +70,6 @@ Create an `index.html` file and paste the following structure.
     
     <!-- Step 4: Include the library. It will run automatically. -->
     <script src="https://cdn.jsdelivr.net/gh/digimarketingai/EZ-Globe.js@latest/EZ-Globe.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/gh/digimarketingai/EZ-Globe.js@latest/EZ-Globe-Load.js"></script>
 </body>
 </html>
