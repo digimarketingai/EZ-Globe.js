@@ -12,7 +12,7 @@ A lightweight, self-contained JavaScript library for creating beautiful, interac
 ### Live Demo / 線上預覽
 
 You can view a live demo of this project once you deploy it to GitHub Pages.
-**https://[Your-GitHub-Username].github.io/[Your-Repository-Name]/**
+**https://digimarketingai.github.io/EZ-Globe.js/**
 
 ---
 
@@ -34,13 +34,9 @@ There are two ways to use EZ-Globe: by direct linking (recommended for most user
 
 #### Method 1: Direct Linking via CDN (Recommended) / 方法一：透過 CDN 直接連結 (推薦)
 
-You can include `EZ-Globe.js` in your own HTML file without downloading anything. Just add the following script tags to your HTML page.
+You can include `EZ-Globe.js` in your own HTML file without downloading anything. Just add the following script tags to your HTML page. This is the easiest way to use the library in your own projects.
 
-您可以在自己的 HTML 檔案中引入 `EZ-Globe.js` 而無需下載任何東西。只需將以下 script 標籤添加到您的 HTML 頁面中。
-
-1.  Create your own `index.html` file.
-2.  Copy and paste the code below.
-3.  **Important:** Replace `[Your-GitHub-Username]` and `[Your-Repository-Name]` with your actual GitHub details in the script URL.
+您可以在自己的 HTML 檔案中引入 `EZ-Globe.js` 而無需下載任何東西。只需將以下 script 標籤添加到您的 HTML 頁面中。這是將此函式庫應用於您自己專案的最簡單方法。
 
 ```html
 <!DOCTYPE html>
@@ -70,8 +66,16 @@ You can include `EZ-Globe.js` in your own HTML file without downloading anything
     </script>
 
     <!-- 2. Include the EZ-Globe library from the CDN -->
-    <!--    Replace [Your-GitHub-Username] and [Your-Repository-Name] below! -->
-    <script src="https://cdn.jsdelivr.net/gh/[Your-GitHub-Username]/[Your-Repository-Name]@latest/EZ-Globe.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/digimarketingai/EZ-Globe.js@latest/*Thinking...*
+
+> **Evaluating the Implementation**
+> 
+> \n\n
+> 
+> I've meticulously examined the strategy, ensuring all placeholders within `README.md` are correctly targeted. The URLs have been carefully constructed, accounting for the user's precise repository name, including the `.js` extension. Further review confirms that changes, while minimal for some files, maintain the original layout and formatting. I'm now fully confident the final response aligns with the user's requirements and the update is valid.
+> 
+> 
+EZ-Globe.js"></script>
 
     <!-- 3. Initialize the library -->
     <script>
@@ -107,13 +111,13 @@ You can host this project's demo page for free.
 
 您可以將此專案的範例頁面免費託管。
 
-1.  **Create a Repository / 建立儲存庫**: Create a new public repository on GitHub.
+1.  **Create a Repository / 建立儲存庫**: Create a new public repository on GitHub named `EZ-Globe.js`.
 2.  **Upload Files / 上傳檔案**: Upload `index.html`, `EZ-Globe.js`, and `README.md` to your new repository.
 3.  **Enable Pages / 啟用 Pages**:
     *   In your repository, go to `Settings` > `Pages`.
     *   Under "Build and deployment", select `Deploy from a branch`.
     *   Set the branch to `main` and the folder to `/ (root)`. Click `Save`.
-4.  **View Your Site / 查看您的網站**: After a few minutes, your globe will be live at the URL provided by GitHub Pages. This URL is also the base for your CDN link.
+4.  **View Your Site / 查看您的網站**: After a few minutes, your globe will be live at `https://digimarketingai.github.io/EZ-Globe.js/`.
 
 ---
 
