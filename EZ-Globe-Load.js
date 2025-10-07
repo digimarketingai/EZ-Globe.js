@@ -1,6 +1,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             GlobeLib.init({
-                customConfig: customConfig,
-                mySpotsData: mySpotsData
+                customConfig: ez-globe-config,
+                mySpotsData: ez-globe-data
             });
         });
