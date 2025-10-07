@@ -110,9 +110,9 @@
     window.EZGlobe = { init: init };
 })(window);
 
-document.addEventListener("DOMContentLoaded", function () {
-  GlobeLib.init({
-    customConfig: customConfig,
-    mySpotsData: mySpotsData
-  });
-});
+    document.addEventListener('DOMContentLoaded', function() {
+            EZGlobe.init({
+                customConfig: customConfig,
+                mySpotsData: mySpotsData
+            });
+    });
